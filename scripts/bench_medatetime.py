@@ -1,7 +1,7 @@
 from __future__ import print_function
 from datetime import datetime
 from time import time
-import udatetime
+import medatetime
 
 RFC3339_DATE = '2016-07-18'
 RFC3339_TIME = '12:58:26.485897+02:00'
@@ -16,80 +16,80 @@ def benchmark_parse():
     def datetime_strptime():
         datetime.strptime(RFC3339_DATE_TIME_DTLIB, DATE_TIME_FORMAT)
 
-    def udatetime_parse():
-        udatetime.from_string(RFC3339_DATE_TIME)
+    def medatetime_parse():
+        medatetime.from_string(RFC3339_DATE_TIME)
 
-    return (datetime_strptime, udatetime_parse)
+    return (datetime_strptime, medatetime_parse)
 
 
 def benchmark_format():
     def datetime_strftime():
         DATETIME_OBJ.strftime(DATE_TIME_FORMAT)
 
-    def udatetime_format():
-        udatetime.to_string(DATETIME_OBJ)
+    def medatetime_format():
+        medatetime.to_string(DATETIME_OBJ)
 
-    return (datetime_strftime, udatetime_format)
+    return (datetime_strftime, medatetime_format)
 
 
 def benchmark_utcnow():
     def datetime_utcnow():
         datetime.utcnow()
 
-    def udatetime_utcnow():
-        udatetime.utcnow()
+    def medatetime_utcnow():
+        medatetime.utcnow()
 
-    return (datetime_utcnow, udatetime_utcnow)
+    return (datetime_utcnow, medatetime_utcnow)
 
 
 def benchmark_now():
     def datetime_now():
         datetime.now()
 
-    def udatetime_now():
-        udatetime.now()
+    def medatetime_now():
+        medatetime.now()
 
-    return (datetime_now, udatetime_now)
+    return (datetime_now, medatetime_now)
 
 
 def benchmark_utcnow_to_string():
     def datetime_utcnow_to_string():
         datetime.utcnow().strftime(DATE_TIME_FORMAT)
 
-    def udatetime_utcnow_to_string():
-        udatetime.utcnow_to_string()
+    def medatetime_utcnow_to_string():
+        medatetime.utcnow_to_string()
 
-    return (datetime_utcnow_to_string, udatetime_utcnow_to_string)
+    return (datetime_utcnow_to_string, medatetime_utcnow_to_string)
 
 
 def benchmark_now_to_string():
     def datetime_now_to_string():
         datetime.now().strftime(DATE_TIME_FORMAT)
 
-    def udatetime_now_to_string():
-        udatetime.now_to_string()
+    def medatetime_now_to_string():
+        medatetime.now_to_string()
 
-    return (datetime_now_to_string, udatetime_now_to_string)
+    return (datetime_now_to_string, medatetime_now_to_string)
 
 
 def benchmark_fromtimestamp():
     def datetime_fromtimestamp():
         datetime.fromtimestamp(TIME)
 
-    def udatetime_fromtimestamp():
-        udatetime.fromtimestamp(TIME)
+    def medatetime_fromtimestamp():
+        medatetime.fromtimestamp(TIME)
 
-    return (datetime_fromtimestamp, udatetime_fromtimestamp)
+    return (datetime_fromtimestamp, medatetime_fromtimestamp)
 
 
 def benchmark_utcfromtimestamp():
     def datetime_utcfromtimestamp():
         datetime.utcfromtimestamp(TIME)
 
-    def udatetime_utcfromtimestamp():
-        udatetime.utcfromtimestamp(TIME)
+    def medatetime_utcfromtimestamp():
+        medatetime.utcfromtimestamp(TIME)
 
-    return (datetime_utcfromtimestamp, udatetime_utcfromtimestamp)
+    return (datetime_utcfromtimestamp, medatetime_utcfromtimestamp)
 
 if __name__ == '__main__':
     import timeit
@@ -130,6 +130,6 @@ if __name__ == '__main__':
         diff = mins[1] / mins[0]
 
         if win:
-            print('udatetime is %.01f times faster' % diff)
+            print('medatetime is %.01f times faster' % diff)
         else:
-            print('udatetime is %.01f times slower' % diff)
+            print('medatetime is %.01f times slower' % diff)

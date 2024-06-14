@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 from datetime import datetime, timedelta, tzinfo
 from pickle import loads, dumps
-import udatetime
+import medatetime
 import pickle
 import copy
 
@@ -13,7 +13,7 @@ class Test(unittest.TestCase):
 
     def test_utcnow(self):
         dt_now = datetime.utcnow()
-        now = udatetime.utcnow()
+        now = medatetime.utcnow()
 
         self.assertIsInstance(now, datetime)
         self.assertEqual(now.year, dt_now.year)
@@ -29,7 +29,7 @@ class Test(unittest.TestCase):
 
     def test_now(self):
         dt_now = datetime.now()
-        now = udatetime.now()
+        now = medatetime.now()
 
         self.assertIsInstance(now, datetime)
         self.assertEqual(now.year, dt_now.year)
@@ -42,7 +42,7 @@ class Test(unittest.TestCase):
 
     def test_from_and_to_string(self):
         rfc3339 = '2016-07-15T12:33:20.123000+01:30'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
 
         self.assertIsInstance(dt, datetime)
         self.assertEqual(dt.year, 2016)
@@ -54,20 +54,20 @@ class Test(unittest.TestCase):
         self.assertEqual(dt.microsecond, 123000)
         self.assertEqual(dt.utcoffset(), timedelta(hours=1, minutes=30))
         self.assertEqual(dt.dst(), NO_DST)
-        self.assertEqual(udatetime.to_string(dt), rfc3339)
+        self.assertEqual(medatetime.to_string(dt), rfc3339)
 
         rfc3339 = '2016-07-18T12:58:26.485897-02:00'
-        dt = udatetime.from_string(rfc3339)
-        self.assertEqual(udatetime.to_string(dt), rfc3339)
+        dt = medatetime.from_string(rfc3339)
+        self.assertEqual(medatetime.to_string(dt), rfc3339)
 
     def test_fromtimestamp(self):
         DAY = 86400
         HOUR = 3600
-        TZ_CEST = udatetime.TZFixedOffset(60 * 2)
+        TZ_CEST = medatetime.TZFixedOffset(60 * 2)
 
         for t in range(0, DAY - (2 * HOUR), HOUR):
             dt = datetime.fromtimestamp(t)
-            udt = udatetime.fromtimestamp(t)
+            udt = medatetime.fromtimestamp(t)
 
             self.assertIsInstance(udt, datetime)
             self.assertEqual(udt.year, dt.year)
@@ -84,7 +84,7 @@ class Test(unittest.TestCase):
 
         for t in range(0, DAY, HOUR):
             dt = datetime.fromtimestamp(t, TZ_CEST)
-            udt = udatetime.fromtimestamp(t, TZ_CEST)
+            udt = medatetime.fromtimestamp(t, TZ_CEST)
 
             self.assertIsInstance(udt, datetime)
             self.assertEqual(udt.year, dt.year)
@@ -101,7 +101,7 @@ class Test(unittest.TestCase):
 
         for t in range(0, DAY * -1, HOUR * -1):
             dt = datetime.fromtimestamp(t, TZ_CEST)
-            udt = udatetime.fromtimestamp(t, TZ_CEST)
+            udt = medatetime.fromtimestamp(t, TZ_CEST)
 
             self.assertIsInstance(udt, datetime)
             self.assertEqual(udt.year, dt.year)
@@ -122,7 +122,7 @@ class Test(unittest.TestCase):
 
         for t in range(0, DAY, HOUR):
             dt = datetime.utcfromtimestamp(t)
-            udt = udatetime.utcfromtimestamp(t)
+            udt = medatetime.utcfromtimestamp(t)
 
             self.assertIsInstance(udt, datetime)
             self.assertEqual(udt.year, dt.year)
@@ -138,7 +138,7 @@ class Test(unittest.TestCase):
 
         for t in range(0, DAY * -1, HOUR * -1):
             dt = datetime.utcfromtimestamp(t)
-            udt = udatetime.utcfromtimestamp(t)
+            udt = medatetime.utcfromtimestamp(t)
 
             self.assertIsInstance(udt, datetime)
             self.assertEqual(udt.year, dt.year)
@@ -165,7 +165,7 @@ class Test(unittest.TestCase):
 
         for r in invalid:
             with self.assertRaises(ValueError):
-                udatetime.from_string(r)
+                medatetime.from_string(r)
 
     def test_ok_from_string(self):
         rfc3339s = [
@@ -181,13 +181,13 @@ class Test(unittest.TestCase):
 
         for r in rfc3339s:
             self.assertIsInstance(
-                udatetime.from_string(r),
+                medatetime.from_string(r),
                 datetime
             )
 
     def test_tzone(self):
         rfc3339 = '2016-07-15T12:33:20.123000+01:30'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
         offset = dt.tzinfo.utcoffset()
         dst = dt.tzinfo.dst()
 
@@ -196,7 +196,7 @@ class Test(unittest.TestCase):
         self.assertEqual(dst, NO_DST)
 
         rfc3339 = '2016-07-15T12:33:20.123000Z'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
         offset = dt.tzinfo.utcoffset()
         dst = dt.tzinfo.dst()
 
@@ -205,7 +205,7 @@ class Test(unittest.TestCase):
         self.assertEqual(dst, NO_DST)
 
         rfc3339 = '2016-07-15T12:33:20.123000-02:00'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
         offset = dt.tzinfo.utcoffset()
         dst = dt.tzinfo.dst()
 
@@ -216,7 +216,7 @@ class Test(unittest.TestCase):
     def test_precision(self):
         t = 1469897308.549871
         dt = datetime.fromtimestamp(t)
-        udt = udatetime.fromtimestamp(t)
+        udt = medatetime.fromtimestamp(t)
         self.assertEqual(udt.microsecond, dt.microsecond)
 
     def test_raise_on_not_TZFixedOffset(self):
@@ -230,35 +230,35 @@ class Test(unittest.TestCase):
         dt = datetime.now(TZInvalid())
 
         with self.assertRaises(ValueError):
-            udatetime.to_string(dt)
+            medatetime.to_string(dt)
 
     def test_variable_fraction(self):
         rfc3339 = '2016-07-15T12:33:20.1'
-        d1 = udatetime.from_string(rfc3339 + ('0' * 5) + 'Z')
+        d1 = medatetime.from_string(rfc3339 + ('0' * 5) + 'Z')
 
         for x in range(0, 6):
-            d2 = udatetime.from_string(rfc3339 + ('0' * x) + 'Z')
+            d2 = medatetime.from_string(rfc3339 + ('0' * x) + 'Z')
             self.assertEqual(d1, d2)
 
         self.assertEqual(
-            udatetime.from_string('2016-07-15T12:33:20.123Z'),
-            udatetime.from_string('2016-07-15T12:33:20.123000Z'),
+            medatetime.from_string('2016-07-15T12:33:20.123Z'),
+            medatetime.from_string('2016-07-15T12:33:20.123000Z'),
         )
 
         self.assertEqual(
-            udatetime.from_string('2016-07-15T12:33:20.0Z'),
-            udatetime.from_string('2016-07-15T12:33:20Z'),
+            medatetime.from_string('2016-07-15T12:33:20.0Z'),
+            medatetime.from_string('2016-07-15T12:33:20Z'),
         )
 
     def test_pickle(self):
         rfc3339 = '2016-07-15T12:33:20.123000+01:30'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
         pickle = dumps(dt)
         self.assertEqual(dt.tzinfo.offset, loads(pickle).tzinfo.offset)
 
     def test_deepcopy(self):
         rfc3339 = '2016-07-15T12:33:20.123000+01:30'
-        dt = udatetime.from_string(rfc3339)
+        dt = medatetime.from_string(rfc3339)
         self.assertEqual(dt, deepcopy(dt))
 
 

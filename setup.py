@@ -9,7 +9,7 @@ except ImportError:
 
 __version__ = None
 here = os.path.abspath(os.path.dirname(__file__))
-name = 'udatetime'
+name = 'medatetime'
 
 with open('%s/requirements.txt' % here) as f:
     requires = f.readlines()
@@ -37,7 +37,7 @@ ext_modules = []
 if __pypy__ is None:
     ext_modules.append(
         Extension(
-            'udatetime.rfc3339',
+            'medatetime.rfc3339',
             ['./src/rfc3339.c'],
             libraries=['m'],
             define_macros=macros,
@@ -68,13 +68,13 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
-    author='Simon Pirschel',
-    author_email='simon@aboutsimon.com',
-    url='https://github.com/freach/udatetime',
+    author='Tim Paine',
+    author_email='t.paine154@gmail.com',
+    url='https://github.com/timkpaine/medatetime',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=requires,
     ext_modules=ext_modules,
-    scripts=['scripts/bench_udatetime.py'],
+    scripts=['scripts/bench_medatetime.py'],
 )

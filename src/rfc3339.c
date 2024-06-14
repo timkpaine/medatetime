@@ -675,7 +675,7 @@ static PyMethodDef FixedOffset_methods[] = {
 #ifdef _PYTHON3
 static PyTypeObject FixedOffset_type = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "udatetime.rfc3339.TZFixedOffset",      /* tp_name */
+    "medatetime.rfc3339.TZFixedOffset",      /* tp_name */
     sizeof(FixedOffset),                    /* tp_basicsize */
     0,                                      /* tp_itemsize */
     0,                                      /* tp_dealloc */
@@ -700,7 +700,7 @@ static PyTypeObject FixedOffset_type = {
 static PyTypeObject FixedOffset_type = {
     PyObject_HEAD_INIT(NULL)
     0,                         /*ob_size*/
-    "udatetime.rfc3339.TZFixedOffset", /*tp_name*/
+    "medatetime.rfc3339.TZFixedOffset", /*tp_name*/
     sizeof(FixedOffset),       /*tp_basicsize*/
     0,                         /*tp_itemsize*/
     0,                         /*tp_dealloc*/
@@ -1033,7 +1033,7 @@ static PyMethodDef rfc3339_methods[] = {
 #ifdef _PYTHON3
 static struct PyModuleDef Python3_module = {
     PyModuleDef_HEAD_INIT,
-    "udatetime.rfc3339",
+    "medatetime.rfc3339",
     NULL,
     -1,
     rfc3339_methods,
@@ -1061,7 +1061,7 @@ initrfc3339(void)
 #ifdef _PYTHON3
     m = PyModule_Create(&Python3_module);
 #else
-    m = Py_InitModule("udatetime.rfc3339", rfc3339_methods);
+    m = Py_InitModule("medatetime.rfc3339", rfc3339_methods);
 #endif
 
     if (m == NULL)

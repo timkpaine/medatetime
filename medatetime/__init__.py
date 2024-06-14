@@ -5,7 +5,7 @@ except ImportError:
     __pypy__ = None
 
 if __pypy__:
-    from udatetime._pure import (
+    from medatetime._pure import (
         utcnow,
         now,
         from_rfc3339_string as from_string,
@@ -17,7 +17,7 @@ if __pypy__:
         TZFixedOffset
     )
 else:
-    from udatetime.rfc3339 import (
+    from medatetime.rfc3339 import (
         utcnow,
         now,
         from_rfc3339_string as from_string,
